@@ -20,3 +20,11 @@ class TestKeyObject(TestCase):
         self.assertFalse(k.is_pressed)
         k.is_pressed = True
         self.assertTrue(k.is_pressed)
+
+    def test_key_friendly_name_not_set(self):
+        k = Key('d')
+        self.assertEqual(k.friendly_name, None)
+
+    def test_key_friendly_name(self):
+        k = Key('d', friendly="BackLeftButton")
+        self.assertEqual(k.friendly_name, "BackLeftButton")
