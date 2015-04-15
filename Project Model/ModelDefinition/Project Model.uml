@@ -1,0 +1,765 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="ae32ae9e-497a-498f-a74c-944770f4a8e2"
+  name="Project Model" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="70ed1733-dee5-4121-84ae-3a1dafecd745">
+      <body>ctrlr_button_cng: This is fired when a button on the controller is pressed or released.
+edit_commit: Takes in a dictionary object when a link is comitted
+key_down: This is fired when a keyboard key is pressed
+start_run: Starts the loop (Control should call this when it gets the gui_minimized event)
+stop_run: Go into edit mode
+add_link: Adds a link to _links
+rem_link: Removes a link from _links</body>
+      <annotatedElements>
+        <classMoniker
+          Id="f4ffd8f0-d4fa-44e6-b884-faa8448bdfd4"
+          LastKnownName="LogicModel"
+          LastKnownLocation="Project Model.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="55a83ccb-8146-49d0-876a-95cead0a70bb">
+      <body>gui_minimzed: fires when the gui 
+	goes to the sys tray
+gui_opened: fires when the gui is
+	resotred from the sys tray
+link_commit: From LogicModel, tells
+	controller to tell GUI to 
+	show that a link was made
+timer_update: FromLogicModel, tells
+	controller to tell GUI to
+	show a different time on a
+	timeout</body>
+    </comment>
+    <comment
+      Id="b774ae57-0da8-4184-99cf-94d17a2b826c">
+      <body>closed: Can be subscribed to
+opened: Can be subscribed to
+--
+reset_view: Shows the ☐ &gt; ☐ view
+show_commit_timeout: Tells the user they
+	have X time before link is commited
+show_ctrlr_link: Causes the second box to be
+	updated with [button]
+show_kbd_link: Causes the first box to be
+	updated with [key]
+show_link: Shows that the link has been made</body>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="f4ffd8f0-d4fa-44e6-b884-faa8448bdfd4"
+        name="LogicModel"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="d3e45651-3b49-41e8-9a67-423c47889d4c"
+            name="_links"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="22ee5c37-5238-4927-bce7-9a8577966737"
+                LastKnownName="ControllerLinks"
+                LastKnownLocation="Project Model.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="feb60dd7-4b58-48dd-9184-e312a7c7e9d6"
+            name="is_running"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="2a4e18ba-4830-4ce9-a36c-1ea5e9bc2409"
+                LastKnownName="bool"
+                LastKnownLocation="Project Model.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="409ad74f-5c57-4565-9624-dd912791262f"
+            name="cancel_timer"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="176e6b6b-4c8a-48d0-9939-06a92b93e745"
+                LastKnownName="timer"
+                LastKnownLocation="Project Model.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b9deeb06-7227-4f59-90bc-db429245e90c"
+            name="start_run"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="62d48dba-be86-4613-bbd1-92d00541275c"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="f45910bb-d88a-47f2-b197-ed25778fe27c"
+                      LastKnownName="void"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="a60bbe2b-af1e-43fd-b0b0-86a4421b9ca4"
+            name="stop_run"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="be478846-c25f-4b8f-a16e-993d502b5db0"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="f45910bb-d88a-47f2-b197-ed25778fe27c"
+                      LastKnownName="void"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="525ec71f-e648-45c3-b3b2-f3a5be24fae5"
+            name="ctrlr_button_cng"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="249ba6d6-c550-46c5-8e95-2a2161b12cc3"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                      LastKnownName="evt"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c2536016-4f44-43ad-9ee9-3cf9b0835895"
+                  name="KeyData"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="5c257473-169b-46e1-b8ec-d25252c7b534"
+            name="edit_commit"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2feefdd7-2202-4474-ae24-97a74debf6a3"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                      LastKnownName="evt"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="18fc8b7e-64d7-4037-842d-ef4c7e292b20"
+                  name="{data"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="4d91ae71-ba40-4899-990c-06b3f18e8392"
+                      LastKnownName="Key}"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b62fdcdf-3531-4f1e-935e-3e8e06b50402"
+            name="add_link"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ecf95251-49a0-4ada-ae19-92b1093f34ba"
+                  name="data"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="429050b8-7ea2-4838-8443-7ee95ef1b5ae"
+                  name="Key"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a99f446c-9705-46a3-b2a4-de7d922ceb67"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="f45910bb-d88a-47f2-b197-ed25778fe27c"
+                      LastKnownName="void"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="7024fbd1-61eb-42e4-bb35-a62ed470738e"
+            name="rem_link"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="16976ed1-93b0-4ab0-8bce-99aafcec74af"
+                  name="data"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ee813f2b-dd65-4587-817d-be4e506b78ae"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="2136bddd-6be3-415f-b727-745bdd6d1480"
+                      LastKnownName="Key"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="8f8f3273-6610-474a-ae85-b17556eb4bb7"
+            name="key_pressed"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="288177c9-87d6-40f5-9c51-9a39b125ffca"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                      LastKnownName="evt"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fc5190d6-55ae-478c-8aa0-096fa4214905"
+                  name="KeyData"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="3e677951-e857-46e7-9619-00378684f1bf"
+        name="LogicController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="4399b927-6972-4ce8-8df3-2f9008d33be6"
+            isDerived="false"
+            sourceEndRoleName="MainController"
+            targetEndRoleName="LogicModel"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="f4ffd8f0-d4fa-44e6-b884-faa8448bdfd4"
+              LastKnownName="LogicModel"
+              LastKnownLocation="Project Model.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="45b62865-2420-4417-8492-d954ceb9ff04"
+                  name="MainController"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1c416388-b36d-4ddf-b57a-6758afe74174"
+                  name="LogicModel"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="a405f42d-7966-465f-9092-46b0ec299958"
+            isDerived="false"
+            sourceEndRoleName="MainController"
+            targetEndRoleName="GUIView"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="fcc0b6df-ebe9-4ee5-be63-b97e15c31e19"
+              LastKnownName="GUIView"
+              LastKnownLocation="Project Model.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="9c1d024a-804b-456c-97e4-fb6cd33b2c1d"
+                  name="MainController"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a42a25f2-e65b-4846-91fa-7dbf0323d0c0"
+                  name="GUIView"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation
+            Id="4c3116f2-a856-45cd-bc20-8c32521d9b58"
+            name="gui_opened"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="76a8ca74-9c5b-40fa-80df-13760b75d1e2"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                      LastKnownName="evt"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4fa504b2-35c2-437a-bf63-b67230945591"
+            name="gui_minimized"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b56e211e-6c7d-4245-ab1d-484a9a290514"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                      LastKnownName="evt"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="142e0f63-3f32-40ac-a9c7-a60246829df4"
+            name="link_commit"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="50e6eef0-6ea7-4c90-bb85-6fd26b187fd8"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                      LastKnownName="evt"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="1bc11725-dd46-4fe2-8748-6c04553546aa"
+            name="timer_update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="54c25165-1255-49fc-9f71-69d4ca76549f"
+                  name="time"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="506244f5-6bdd-495e-9c04-fb8eb7dcb65b"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                      LastKnownName="evt"
+                      LastKnownLocation="Project Model.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="fcc0b6df-ebe9-4ee5-be63-b97e15c31e19"
+        name="GUIView"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="8f2d3293-4c36-474c-9e94-5df99648c74c"
+            name="opened"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                LastKnownName="evt"
+                LastKnownLocation="Project Model.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="bb9fe970-e1bf-4659-8f7f-88b667e20b6b"
+            name="closed"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+                LastKnownName="evt"
+                LastKnownLocation="Project Model.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b209f5fc-99ec-43ac-8d6e-4d50e9b74ce3"
+            name="show_ctrlr_link"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1f2af680-bdb5-40ff-bd7e-f7c089cfae1a"
+                  name="button"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="24569ff9-1721-419b-8a15-f0b95ff6d37c"
+            name="show_kbd_link"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9e9d4ce4-4487-4e6b-ab9e-2a3d50b75227"
+                  name="key"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bd13e8fd-726f-4c10-82b2-66a7c2f4e2ac"
+            name="show_commit_timeout"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2a7dd951-5341-47f4-bda3-387b5cbc5580"
+                  name="time"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="aad86348-c203-479a-96ab-bd05deb910aa"
+            name="reset_view"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="0d1530af-b533-4909-8bde-f7d182dbf181"
+            name="show_link"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1a677fba-53a9-4c6a-a832-f7795e013c33"
+                  name="buton"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8eb3a808-1a74-4b94-aea6-4c885e64eef2"
+                  name="key"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="63e14b86-f976-4ee4-bf22-754128ac99e5"
+        name="EditingController"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="74ba8201-799c-46a7-af08-5fda907c5d7b"
+        name="EditingModel"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="22ee5c37-5238-4927-bce7-9a8577966737"
+        name="ControllerLinks" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="f45910bb-d88a-47f2-b197-ed25778fe27c"
+        name="void" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="2a4e18ba-4830-4ce9-a36c-1ea5e9bc2409"
+        name="bool" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="fa82a90a-bb6c-476a-b96f-c4a295b0cc76"
+        name="{data: Key{" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="add41150-c463-4cea-a88e-cd784b082aa1"
+        name="{data: Key}" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="65cb30f5-be84-4223-8525-4538ccd42dcd"
+        name="evt" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="176e6b6b-4c8a-48d0-9939-06a92b93e745"
+        name="timer" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="4d91ae71-ba40-4899-990c-06b3f18e8392"
+        name="Key}" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="2136bddd-6be3-415f-b727-745bdd6d1480"
+        name="Key" />
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>
