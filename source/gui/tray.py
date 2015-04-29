@@ -15,7 +15,7 @@ class TrayIcon(wx.TaskBarIcon):
         self.frame = frame
 
         self.icon_data = (wx.Icon('graphics/controller_icon.ico',
-                                  wx.BITMAP_TYPE_ICO), "Countertop Controller")
+                                  wx.BITMAP_TYPE_ICO), self.frame.SYSTEM_NAME)
 
         self.Bind(wx.EVT_TASKBAR_RIGHT_UP, self.show_right_click_menu)
 

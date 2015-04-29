@@ -1,7 +1,6 @@
 import wx
 from wx.lib.pubsub import pub
 import tray
-
 class CGUI(wx.Frame):
 
     EVENT_OPEN = "OPEN"
@@ -9,6 +8,7 @@ class CGUI(wx.Frame):
     EVENT_EXIT = "EXIT"
     EVENT_TO_TRAY = "TO_TRAY"
     EVENT_FROM_TRAY = "FROM_TRAY"
+    SYSTEM_NAME = "Countertop Controller"
 
 
 
@@ -62,7 +62,7 @@ class CGUI(wx.Frame):
 
         font = wx.Font(16, wx.DEFAULT, wx.NORMAL, wx.BOLD)
         self.heading = wx.StaticText(self, id=-0,
-                                     label='Countertop Controller',
+                                     label=self.SYSTEM_NAME,
                                      pos=(0, 10),
                                      size=(self.GetVirtualSizeTuple()[0], 20),
                                      style=wx.ALIGN_CENTRE)
@@ -83,10 +83,16 @@ class CGUI(wx.Frame):
         self.Destroy()
         pub.sendMessage(self.EVENT_EXIT)
         self.Close()
+        raise Exception("Remove self.Close() from GUI.")
 
     def min_to_tray(self, e):
         self.Hide()
         self.tray.SetIcon(*self.tray.icon_data)
+        if(self.has_said_at_tray is False):
+            self.tray.ShowBalloon(title=self.SYSTEM_NAME + " is still open.\n",
+                                  text="You can restore " + self.SYSTEM_NAME +
+                                       " by double clicking the icon.")
+            self.has_said_at_tray = True
         pub.sendMessage(self.EVENT_TO_TRAY)
 
     def max_from_tray(self, e):
@@ -98,5 +104,5 @@ class CGUI(wx.Frame):
 
 
 ex = wx.App(False, None, True, True)
-CGUI(None, title="Countertop")
+CGUI(None, title=CGUI.SYSTEM_NAME)
 ex.MainLoop()
