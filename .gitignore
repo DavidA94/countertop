@@ -2,3 +2,4 @@
 *.exe
 htmlcov
 .coverage
+.idea/
