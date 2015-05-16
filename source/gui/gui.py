@@ -130,9 +130,6 @@ class CGUI(wx.Frame):
                                    style=wx.ALIGN_CENTRE)
         # Set the font for the instruction label
         self.instr.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-        self.show_kbd_key()
-        #self.show_crl_key("0")
-        #self.show_tick()
 
     def on_load(self, e):
         pub.sendMessage(self.EVENT_LOAD)
