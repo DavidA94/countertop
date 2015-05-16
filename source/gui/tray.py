@@ -21,8 +21,6 @@ class TrayIcon(wx.TaskBarIcon):
 
         self.Bind(wx.EVT_TASKBAR_LEFT_DCLICK, self.restore_main_window)
 
-
-
     def show_right_click_menu(self, e):
         self.PopupMenu(self.make_menu())
 

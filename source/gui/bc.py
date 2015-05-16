@@ -7,7 +7,7 @@ class ButtonControl(wx.PyControl):
     to be hidden/shown, and have a single character placed on top of it.
     """
 
-    def __init__(self, parent, img, font, color=(0,0,0), id=wx.ID_ANY,
+    def __init__(self, parent, img, font, color=(0, 0, 0), id=wx.ID_ANY,
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.NO_BORDER, validator=wx.DefaultValidator,
                  name="ButtonControl"):
@@ -74,11 +74,23 @@ class ButtonControl(wx.PyControl):
                             x=(self._image.GetWidth() - w) / 2,
                             y=(self._image.GetHeight() - h) / 2)
 
-    def make_visible(self):
+    def make_visible(self, char=""):
         """
-        Causes the button to be visible
+        Causes the button to be visible with the passed char (if any).
+
+        :param char: The character to be displayed.
         """
+
+        # Make it visible
         self._visible = True
+
+        # If a character was passed, set that, else "".
+        if len(char) > 0:
+            self._char = char[0]
+        else:
+            self._char = ""
+
+        # Refresh the control
         self.Refresh()
 
     def make_hidden(self):
@@ -88,13 +100,3 @@ class ButtonControl(wx.PyControl):
 
         self._visible = False
         self.Refresh()
-
-    def set_char(self, char):
-        """
-        Sets the character to be displayed with the button
-        :param char: The character to be displayed (must be len() == 0)
-        """
-
-        if len(char) > 0:
-            self._char = char[0]
-            self.Refresh()

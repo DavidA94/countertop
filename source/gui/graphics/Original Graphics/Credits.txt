@@ -1,0 +1,19 @@
+--Animated Checkmark
+Created By: David Antnucci
+License: Free
+URL: None
+
+--Blank Keyboard Key: 
+Created By: Mike Chawla
+License: Free
+URL: http://www.clker.com/clipart-keyboard-keys-no-alphabets.html
+
+--Controller Icon: 
+Created By: Jugal Paryani
+License: Free
+URL: http://capital18.deviantart.com/
+
+--Controller Key Icon:
+Created By: Nicolae Berbece
+License: Free
+URL: http://xelubest.com

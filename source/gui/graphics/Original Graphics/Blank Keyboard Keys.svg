@@ -1,0 +1,93 @@
+<?xml version="1.0"?><svg width="700" height="450" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Keyboard Keys-No Alphabets</title>
+ <defs>
+  <linearGradient id="linearGradient3165">
+   <stop stop-color="#d7d7d7" offset="0" id="stop3171"/>
+   <stop stop-color="#e7e7e7" offset="0.5" id="stop3173"/>
+   <stop stop-color="#d7d7d7" offset="1" id="stop3169"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3141">
+   <stop stop-color="#d8d8d8" offset="0" id="stop3143"/>
+   <stop stop-color="#a3a3a3" offset="1" id="stop3145"/>
+  </linearGradient>
+  <linearGradient xlink:href="#linearGradient3141" id="linearGradient2905" y2="1.00273" x2="0.5" y1="-0.00273" x1="0.5"/>
+  <linearGradient xlink:href="#linearGradient3165" id="linearGradient2907" y2="0.5" x2="0.92004" y1="0.5" x1="0.09862"/>
+  <linearGradient xlink:href="#linearGradient3141" id="linearGradient3700" y2="1.00273" x2="0.5" y1="-0.00273" x1="0.5"/>
+  <linearGradient xlink:href="#linearGradient3165" id="linearGradient3702" y2="0.5" x2="0.92004" y1="0.5" x1="0.09862"/>
+  <linearGradient xlink:href="#linearGradient3141-0" id="linearGradient2905-3" y2="1.00273" x2="0.5" y1="-0.00273" x1="0.5"/>
+  <linearGradient id="linearGradient3141-0">
+   <stop stop-color="#d8d8d8" offset="0" id="stop3143-2"/>
+   <stop stop-color="#a3a3a3" offset="1" id="stop3145-9"/>
+  </linearGradient>
+  <linearGradient xlink:href="#linearGradient3165-0" id="linearGradient2907-6" y2="0.5" x2="0.92004" y1="0.5" x1="0.09862"/>
+  <linearGradient id="linearGradient3165-0">
+   <stop stop-color="#d7d7d7" offset="0" id="stop3171-9"/>
+   <stop stop-color="#e7e7e7" offset="0.5" id="stop3173-3"/>
+   <stop stop-color="#d7d7d7" offset="1" id="stop3169-5"/>
+  </linearGradient>
+  <linearGradient xlink:href="#linearGradient3141-0" id="linearGradient3700-4" y2="1.00273" x2="0.5" y1="-0.00273" x1="0.5"/>
+  <linearGradient id="linearGradient3734">
+   <stop stop-color="#d8d8d8" offset="0" id="stop3736"/>
+   <stop stop-color="#a3a3a3" offset="1" id="stop3738"/>
+  </linearGradient>
+  <linearGradient gradientTransform="matrix(0.8317353,0,0,0.8368438,27.650334,44.986416)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient3165-0" id="linearGradient3702-3" y2="292.36218" x2="250.18001" y1="292.36218" x1="90.58992"/>
+  <linearGradient id="linearGradient3741">
+   <stop stop-color="#d7d7d7" offset="0" id="stop3743"/>
+   <stop stop-color="#e7e7e7" offset="0.5" id="stop3745"/>
+   <stop stop-color="#d7d7d7" offset="1" id="stop3747"/>
+  </linearGradient>
+  <linearGradient xlink:href="#linearGradient3165-0" id="linearGradient3760" y2="0.5" x2="0.92004" y1="0.5" x1="0.09862"/>
+  <linearGradient xlink:href="#linearGradient3141-0-2" id="linearGradient2905-3-7" y2="1.00273" x2="0.5" y1="-0.00273" x1="0.5"/>
+  <linearGradient id="linearGradient3141-0-2">
+   <stop stop-color="#d8d8d8" offset="0" id="stop3143-2-3"/>
+   <stop stop-color="#a3a3a3" offset="1" id="stop3145-9-5"/>
+  </linearGradient>
+  <linearGradient xlink:href="#linearGradient3165-0-7" id="linearGradient2907-6-1" y2="0.5" x2="0.92004" y1="0.5" x1="0.09862"/>
+  <linearGradient id="linearGradient3165-0-7">
+   <stop stop-color="#d7d7d7" offset="0" id="stop3171-9-8"/>
+   <stop stop-color="#e7e7e7" offset="0.5" id="stop3173-3-9"/>
+   <stop stop-color="#d7d7d7" offset="1" id="stop3169-5-4"/>
+  </linearGradient>
+  <linearGradient xlink:href="#linearGradient3141-6" id="linearGradient2905-1" y2="1.00273" x2="0.5" y1="-0.00273" x1="0.5"/>
+  <linearGradient id="linearGradient3141-6">
+   <stop stop-color="#d8d8d8" offset="0" id="stop3143-4"/>
+   <stop stop-color="#a3a3a3" offset="1" id="stop3145-3"/>
+  </linearGradient>
+  <linearGradient gradientTransform="matrix(0.8317353,0,0,0.8368438,27.650334,44.986416)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient3165-4" id="linearGradient2907-5" y2="292.36218" x2="250.18001" y1="292.36218" x1="90.58992"/>
+  <linearGradient id="linearGradient3165-4">
+   <stop stop-color="#d7d7d7" offset="0" id="stop3171-8"/>
+   <stop stop-color="#e7e7e7" offset="0.5" id="stop3173-7"/>
+   <stop stop-color="#d7d7d7" offset="1" id="stop3169-3"/>
+  </linearGradient>
+  <linearGradient xlink:href="#linearGradient3165-4" id="linearGradient3904" y2="0.5" x2="0.92004" y1="0.5" x1="0.09862"/>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <g id="layer1">
+   <g id="g3175">
+    <rect fill="url(#linearGradient3700)" fill-rule="evenodd" stroke="#8d8d8d" stroke-width="1px" id="rect2168" y="33.29759" x="32.82489" ry="21.42857" height="182.85715" width="194.28572"/>
+    <rect fill="url(#linearGradient3702)" fill-rule="evenodd" stroke="#f8f8f8" stroke-width="0.83429px" id="rect3157" y="45.50045" x="48.45631" ry="17.93237" height="153.02286" width="161.59431"/>
+   </g>
+   <g id="g4174">
+    <rect fill="url(#linearGradient2905)" fill-rule="evenodd" stroke="#8d8d8d" stroke-width="1px" id="rect4176" y="32.65273" x="250.51241" ry="21.42857" height="182.85715" width="194.28572"/>
+    <rect fill="url(#linearGradient2907)" fill-rule="evenodd" stroke="#f8f8f8" stroke-width="0.83429px" id="rect4178" y="44.85559" x="266.14384" ry="17.93237" height="153.02286" width="161.59431"/>
+   </g>
+   <g id="g3175-6">
+    <rect fill="url(#linearGradient3700-4)" fill-rule="evenodd" stroke="#8d8d8d" stroke-width="1px" id="rect2168-4" y="238.35854" x="32.82488" ry="21.42857" height="182.85715" width="194.28572"/>
+    <rect fill="url(#linearGradient3760)" fill-rule="evenodd" stroke="#f8f8f8" stroke-width="0.83429px" id="rect3157-3" y="250.5614" x="48.45631" ry="17.93237" height="153.02286" width="161.59431"/>
+   </g>
+   <g id="g4174-9">
+    <rect fill="url(#linearGradient2905-3)" fill-rule="evenodd" stroke="#8d8d8d" stroke-width="1px" id="rect4176-1" y="237.7137" x="250.51241" ry="21.42857" height="182.85715" width="194.28572"/>
+    <rect fill="url(#linearGradient2907-6)" fill-rule="evenodd" stroke="#f8f8f8" stroke-width="0.83429px" id="rect4178-0" y="249.91656" x="266.14384" ry="17.93237" height="153.02286" width="161.59431"/>
+   </g>
+   <g id="g4174-3">
+    <rect fill="url(#linearGradient2905-1)" fill-rule="evenodd" stroke="#8d8d8d" stroke-width="1px" id="rect4176-5" y="32.65273" x="466.68507" ry="21.42857" height="182.85715" width="194.28572"/>
+    <rect fill="url(#linearGradient3904)" fill-rule="evenodd" stroke="#f8f8f8" stroke-width="0.83429px" id="rect4178-01" y="44.85559" x="482.31649" ry="17.93237" height="153.02286" width="161.59431"/>
+   </g>
+   <g id="g4174-9-7">
+    <rect fill="url(#linearGradient2905-3-7)" fill-rule="evenodd" stroke="#8d8d8d" stroke-width="1px" id="rect4176-1-8" y="237.7137" x="466.68507" ry="21.42857" height="182.85715" width="194.28572"/>
+    <rect fill="url(#linearGradient2907-6-1)" fill-rule="evenodd" stroke="#f8f8f8" stroke-width="0.83429px" id="rect4178-0-9" y="249.91656" x="482.31649" ry="17.93237" height="153.02286" width="161.59431"/>
+   </g>
+  </g>
+ </g>
+</svg>
