@@ -9,10 +9,11 @@ import threading
 class CGUI(wx.Frame):
 
     EVENT_LOAD = "LOAD"
-    EVENT_SAVE = "SAVE"
     EVENT_EXIT = "EXIT"
     EVENT_TO_TRAY = "TO_TRAY"
     EVENT_FROM_TRAY = "FROM_TRAY"
+    GET_DEVICES = "GET_DEVICES"
+
     SYSTEM_NAME = "Countertop Controller"
     KBD_WAIT = "Waiting for keyboard key press . . ."
     CRL_WAIT = "Waiting for controller button press . . ."
@@ -78,6 +79,8 @@ class CGUI(wx.Frame):
         # The fil menu has two options, load and exit
         load_item = filemenu.Append(wx.ID_OPEN, "&Load Config...\tCtrl + L",
                                     "Load Configuration")
+        slct_item = filemenu.Append(wx.ID_SETUP, "&Select Device...\tCtrl + D",
+                                    "Select Device")
         exit_item = filemenu.Append(wx.ID_EXIT, "E&xit\tAlt + F4",
                                     "Exit Application")
 
@@ -86,7 +89,17 @@ class CGUI(wx.Frame):
 
         # Bind events for when the menu options are clicked.
         self.Bind(wx.EVT_MENU, self.on_load, load_item)
+        self.Bind(wx.EVT_MENU, self.on_slct, slct_item)
         self.Bind(wx.EVT_MENU, self.on_exit, exit_item)
+
+        # Add keyboard shortcuts
+        shortcut_table = wx.AcceleratorTable([(wx.ACCEL_CTRL, ord('L'),
+                                               load_item.GetId()),  # Ctrl + L
+                                              (wx.ACCEL_CTRL, ord('D'),
+                                               slct_item.GetId()),  # Ctrl + D
+                                              (wx.ACCEL_ALT, wx.WXK_F4,
+                                               exit_item.GetId())])  # Alt + F4
+        self.SetAcceleratorTable(shortcut_table)
 
         # Set the menu bar for the window
         self.SetMenuBar(menubar)
@@ -112,16 +125,16 @@ class CGUI(wx.Frame):
         wx.StaticLine(self, id=2, pos=(40, 40),
                       size=(self.GetVirtualSizeTuple()[0] - 80, 1))
 
-        # Initialize the blank keyboard key
-        self.bkk_ctrl = ButtonControl(parent=self, img=self.bkk,
-                                      font=self.kk_font, id=3,
-                                      pos=(60, 60)
-        )
-
         # Initialize the blank controller button
         self.bcb_ctrl = ButtonControl(parent=self, img=self.bcb,
                                       font=self.cb_font, color=(255, 255, 255),
-                                      id=3, pos=(400 - 60 - 72, 60)
+                                      id=3, pos=(60, 60)
+        )
+
+        # Initialize the blank keyboard key
+        self.bkk_ctrl = ButtonControl(parent=self, img=self.bkk,
+                                      font=self.kk_font, id=3,
+                                      pos=(400 - 60 - 72, 60)
         )
 
         # Initialize the instruction label
@@ -133,6 +146,14 @@ class CGUI(wx.Frame):
 
     def on_load(self, e):
         pub.sendMessage(self.EVENT_LOAD)
+
+    def on_slct(self, e):
+        dlg = wx.SingleChoiceDialog(parent=self, message="Select a Device",
+                                    caption="Select a Device",
+                                    choices=("1", "2", "3"))
+
+        dlg.ShowModal()
+        pub.sendMessage(self.GET_DEVICES)
 
     def on_exit(self, e):
         self.tray.RemoveIcon()
@@ -249,6 +270,10 @@ class CGUI(wx.Frame):
         """ Hides the check mark. """
         self.gif.Destroy()
 
+    #def select_device
+
 ex = wx.App(False, None, True, True)
 CGUI(None, title=CGUI.SYSTEM_NAME)
 ex.MainLoop()
+
+
