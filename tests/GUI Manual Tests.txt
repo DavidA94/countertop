@@ -1,0 +1,4 @@
+Ran GUI, ensured everything looked correctly.
+Added show functions (at separate times)
+-Ran again to ensure it still looked correctly
+Checked keyboard shortcuts.
