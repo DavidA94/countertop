@@ -91,12 +91,7 @@ class CGUI(wx.Frame):
 
         # region Keyboard Shortcuts
 
-        self.shortcuts = wx.AcceleratorTable([(wx.ACCEL_CTRL, ord('L'),
-                                               load_item.GetId()),  # Ctrl + L
-                                              (wx.ACCEL_CTRL, ord('D'),
-                                               select_item.GetId()),  # Ctrl+D
-                                              (wx.ACCEL_ALT, wx.WXK_F4,
-                                               exit_item.GetId())])  # Alt + F4
+        self.shortcuts = None
 
         # endregion
 
@@ -105,6 +100,8 @@ class CGUI(wx.Frame):
 
         # Show the UI
         self.Show()
+
+        self.SetFocus()
 
     # endregion
 
@@ -146,6 +143,13 @@ class CGUI(wx.Frame):
         # endregion
 
         # region Keyboard Shortcuts / AcceleratorTable
+
+        self.shortcuts = wx.AcceleratorTable([(wx.ACCEL_CTRL, ord('L'),
+                                               load_item.GetId()),  # Ctrl + L
+                                              (wx.ACCEL_CTRL, ord('D'),
+                                               select_item.GetId()),  # Ctrl+D
+                                              (wx.ACCEL_ALT, wx.WXK_F4,
+                                               exit_item.GetId())])  # Alt + F4
 
         # Add keyboard shortcuts
         self.SetAcceleratorTable(self.shortcuts)
@@ -337,6 +341,9 @@ class CGUI(wx.Frame):
     def key_up(self, e):
         #if self.waiting_for_kbd_key:
         #    self.controller.map_keys(e.)
+
+        print hex(e.GetRawKeyCode())
+        return
 
         val = Vk2Sk.convert(e.GetRawKeyCode(), e.AltDown(), e.CmdDown(),
                             e.ShiftDown())
