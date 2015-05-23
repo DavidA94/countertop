@@ -1,23 +1,23 @@
 import wx
 import wx.animate
 import tray
-from wx.lib.pubsub import pub
 from bc import ButtonControl
+from source.logic.controller import Controller
+from source.logic.vk2sk import Vk2Sk
 import threading
-
 
 class CGUI(wx.Frame):
 
-    EVENT_LOAD = "LOAD"
-    EVENT_EXIT = "EXIT"
-    EVENT_TO_TRAY = "TO_TRAY"
-    EVENT_FROM_TRAY = "FROM_TRAY"
-    GET_DEVICES = "GET_DEVICES"
+    # region Constants
 
     SYSTEM_NAME = "Countertop Controller"
     KBD_WAIT = "Waiting for keyboard key press . . ."
     CRL_WAIT = "Waiting for controller button press . . ."
     SUC_MAP = "Mapping Successful"
+
+    # endregion
+
+    # region Constructor
 
     def __init__(self, parent, title):
         """
@@ -26,24 +26,49 @@ class CGUI(wx.Frame):
         :param title: The title of the GUI
         """
 
+        # region Window Setup & Tray Setup
+
         # Set up the parent Frame as a window that can't be re-sized.
         wx.Frame.__init__(self, parent, title=title, size=(400, 225),
-                          style=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
+                          style=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER |
+                                wx.WANTS_CHARS)
 
         # Set the icon
         self.SetIcon(wx.Icon('graphics/controller_icon.ico',
                              wx.BITMAP_TYPE_ICO))
 
-        # Misc Data
+        # Back Color
+        self.SetBackgroundColour("White")
+
+        # Create the tray version
+        self.tray = tray.TrayIcon(self)
+
+        # endregion
+
+        # region Data member variables
+
+        # Data Setup
+        self.controller = Controller(self.crl_btn_pressed)  # The controller
+        self.device_selected = False
         self.has_said_at_tray = False  # Only show the "still open" msg once
+        self.waiting_for_crl_btn = True  # Waiting for a controller button?
+        self.waiting_for_kbd_key = False  # Waiting for a keyboard key?
+
+        # endregion
+
+        # region GUI member initialized in init_gui
+
+        # GUI stuff
         self.bkk_ctrl = None  # Initialized in init_gui
         self.bcb_ctrl = None  # Initialized in init_gui
         self.instr = None  # Initialized in init_gui
         self.heading = None  # Initialized in init_gui
+        self.select_dev_btn = None  # Initialized in init_gui
         self.gif = None  # Used to show that a mapping has been successful
 
-        # Create the tray version
-        self.tray = tray.TrayIcon(self)
+        # endregion
+
+        # region Keyboard and Controller graphics and fonts
 
         # Keyboard and Controller key icons
         self.bkk = wx.Image('graphics/BKK.png', wx.BITMAP_TYPE_ANY)
@@ -62,56 +87,73 @@ class CGUI(wx.Frame):
                                underline=False, face="Arial",
                                encoding=wx.FONTENCODING_DEFAULT)
 
+        # endregion
+
+        # region Keyboard Shortcuts
+
+        self.shortcuts = wx.AcceleratorTable([(wx.ACCEL_CTRL, ord('L'),
+                                               load_item.GetId()),  # Ctrl + L
+                                              (wx.ACCEL_CTRL, ord('D'),
+                                               select_item.GetId()),  # Ctrl+D
+                                              (wx.ACCEL_ALT, wx.WXK_F4,
+                                               exit_item.GetId())])  # Alt + F4
+
+        # endregion
+
         # Initialize the UI
         self.init_ui()
+
         # Show the UI
         self.Show()
 
+    # endregion
+
+    # region GUI Initialization
+
     def init_ui(self):
-        """
-        Initializes a CGUI with the proper elements
-        """
+        """ Initializes a CGUI with the proper elements """
+
+        # region Menu Setup
 
         # Create the menu
-        menubar = wx.MenuBar()  # The menu bar
-        filemenu = wx.Menu()  # The file menu in the menu bar
+        menu_bar = wx.MenuBar()  # The menu bar
+        file_menu = wx.Menu()  # The file menu in the menu bar
 
-        # The fil menu has two options, load and exit
-        load_item = filemenu.Append(wx.ID_OPEN, "&Load Config...\tCtrl + L",
-                                    "Load Configuration")
-        slct_item = filemenu.Append(wx.ID_SETUP, "&Select Device...\tCtrl + D",
-                                    "Select Device")
-        exit_item = filemenu.Append(wx.ID_EXIT, "E&xit\tAlt + F4",
-                                    "Exit Application")
+        # The file menu has Load, Select, and Exit
+        load_item = file_menu.Append(wx.ID_OPEN, "&Load Config...\tCtrl + L",
+                                     "Load Configuration")
+        select_item = file_menu.Append(wx.ID_SETUP,
+                                       "&Select Device...\tCtrl + D",
+                                       "Select Device")
+        exit_item = file_menu.Append(wx.ID_EXIT, "E&xit\tAlt + F4",
+                                     "Exit Application")
 
         # Add the file menu to the menu bar
-        menubar.Append(filemenu, "&File")
+        menu_bar.Append(file_menu, "&File")
+
+        # Set the menu bar for the window
+        self.SetMenuBar(menu_bar)
+
+        # region Menu Bindings
 
         # Bind events for when the menu options are clicked.
         self.Bind(wx.EVT_MENU, self.on_load, load_item)
-        self.Bind(wx.EVT_MENU, self.on_slct, slct_item)
+        self.Bind(wx.EVT_MENU, self.on_select, select_item)
         self.Bind(wx.EVT_MENU, self.on_exit, exit_item)
 
+        # endregion
+
+        # endregion
+
+        # region Keyboard Shortcuts / AcceleratorTable
+
         # Add keyboard shortcuts
-        shortcut_table = wx.AcceleratorTable([(wx.ACCEL_CTRL, ord('L'),
-                                               load_item.GetId()),  # Ctrl + L
-                                              (wx.ACCEL_CTRL, ord('D'),
-                                               slct_item.GetId()),  # Ctrl + D
-                                              (wx.ACCEL_ALT, wx.WXK_F4,
-                                               exit_item.GetId())])  # Alt + F4
-        self.SetAcceleratorTable(shortcut_table)
+        self.SetAcceleratorTable(self.shortcuts)
 
-        # Set the menu bar for the window
-        self.SetMenuBar(menubar)
+        # endregion
 
-        # Back Color
-        self.SetBackgroundColour("White")
+        # region Always Present GUI Objects
 
-        # Close / Minimize Events (They just make it minimize to the tray)
-        self.Bind(wx.EVT_CLOSE, self.min_to_tray)
-        self.Bind(wx.EVT_ICONIZE, self.min_to_tray)
-
-        # --- GUI Objects --- #
         # Place the top heading
         self.heading = wx.StaticText(self, id=0,
                                      label=self.SYSTEM_NAME,
@@ -124,6 +166,10 @@ class CGUI(wx.Frame):
         # Line below the heading
         wx.StaticLine(self, id=2, pos=(40, 40),
                       size=(self.GetVirtualSizeTuple()[0] - 80, 1))
+
+        # endregion
+
+        # region Dynamic GUI Objects
 
         # Initialize the blank controller button
         self.bcb_ctrl = ButtonControl(parent=self, img=self.bcb,
@@ -141,27 +187,103 @@ class CGUI(wx.Frame):
         self.instr = wx.StaticText(self, id=0, label="", pos=(0, 150),
                                    size=(self.GetVirtualSizeTuple()[0], 20),
                                    style=wx.ALIGN_CENTRE)
+
         # Set the font for the instruction label
         self.instr.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
-    def on_load(self, e):
-        pub.sendMessage(self.EVENT_LOAD)
+        # region Select Device Button
 
-    def on_slct(self, e):
+        # Create the Select Device button
+        self.select_dev_btn = wx.Button(parent=self, id=4,
+                                        label="&Select Device", pos=(0, 0))
+
+        # Get the size of the window and the size of the button
+        win_size = self.GetVirtualSizeTuple()
+        btn_size = self.select_dev_btn.GetSize()
+
+        # Reposition the button to be in the middle(ish)
+        self.select_dev_btn.SetPosition((win_size[0] / 2 - btn_size[0] / 2,
+                                         win_size[1] / 2 - 5))
+
+        # endregion
+
+        # endregion
+
+        # region Event Bindings
+
+        # Close / Minimize Events (They just make it minimize to the tray)
+        self.Bind(wx.EVT_CLOSE, self.min_to_tray)
+        # self.Bind(wx.EVT_ICONIZE, self.min_to_tray)
+
+        # Capture keystrokes
+        self.Bind(wx.EVT_KEY_UP, self.key_up)
+
+        # Bind an event to the Select Device button shown at startup
+        self.Bind(wx.EVT_BUTTON, self.on_select, self.select_dev_btn)
+        # endregion
+
+    # endregion
+
+    # region Bound Events
+
+    def on_load(self, e):
+        """ Loads the last configuration """
+
+        # Try to load the configuration
+        try:
+            # Load it
+            self.controller.load_config()
+
+            # And if we make it this far, then we can tell them it loaded.
+            wx.MessageBox("Last configuration successfully loaded.",
+                          "Config Loaded", wx.OK | wx.ICON_INFORMATION)
+
+        # If something goes wrong
+        except Exception as e:
+            # Tell the user what
+            wx.MessageBox(e.message, "Error", wx.OK | wx.ICON_EXCLAMATION)
+
+    def on_select(self, e):
+        """
+        Allows the user to select a device
+
+        :param e: event - Not used
+        """
+
+        # Create a single choice dialog with the available devices
         dlg = wx.SingleChoiceDialog(parent=self, message="Select a Device",
                                     caption="Select a Device",
-                                    choices=("1", "2", "3"))
+                                    choices=self.controller.get_devices())
 
-        dlg.ShowModal()
-        pub.sendMessage(self.GET_DEVICES)
+        # Show the dialog as modal, and if the OK button is pressed,
+        # and a valid option was selected
+        if dlg.ShowModal() == wx.ID_OK and dlg.GetSelection >= 0:
+            # Tell the controller the selected
+            self.controller.set_device(dlg.GetSelection())
+
+            # Remember that we've selected a device now
+            self.device_selected = True
+
+            # Reset the system so it will now ask
+            self.reset_asking()
+
+        # Else if a device is already selected
+        elif self.device_selected:
+            # Then just reset the asking state
+            self.reset_asking()
 
     def on_exit(self, e):
+        """
+        Quits the application
+
+        :param e: Event - not used
+        """
+
+        # Remove and destroy the tray
         self.tray.RemoveIcon()
         self.tray.Destroy()
+        # Destroy ourself
         self.Destroy()
-        pub.sendMessage(self.EVENT_EXIT)
-        self.Close()
-        raise Exception("Remove self.Close() from GUI.")
 
     def min_to_tray(self, e):
         """
@@ -170,7 +292,13 @@ class CGUI(wx.Frame):
         :param e: Event - Unused
         """
 
-        # Hide the main GUI
+        # If no device has been selected yet
+        if not self.device_selected:
+            # Just exit
+            self.on_exit(e)
+            return
+
+        # Otherwise, hide the main GUI
         self.Hide()
 
         # Set the tray icon from it's data.
@@ -185,22 +313,46 @@ class CGUI(wx.Frame):
             # And don't show it again.
             self.has_said_at_tray = True
 
-        # Send an event saying that we've been minimized.
-        pub.sendMessage(self.EVENT_TO_TRAY)
+        # Tell the controller it's minimized
+        # TODO Call method
 
     def max_from_tray(self, e):
         """
         Return the GUI from the system tray.
+
         :param e: Event - unused.
         """
+
+        # Reset so it's asking for the controller button
+        self.reset_asking()
 
         self.Restore()  # Restore the main GUI
         self.Show()  # Show the main GUI
         self.Raise()  # Raise the main GUI (Just in case)
         self.tray.RemoveIcon()  # Remove the tray icon
 
-        # Send an event saying we've come back from the tray.
-        pub.sendMessage(self.EVENT_FROM_TRAY)
+        # Tell the controller it's maximized
+        # TODO Call method
+
+    def key_up(self, e):
+        #if self.waiting_for_kbd_key:
+        #    self.controller.map_keys(e.)
+
+        val = Vk2Sk.convert(e.GetRawKeyCode(), e.AltDown(), e.CmdDown(),
+                            e.ShiftDown())
+
+        if val is not None:
+            # TODO call_linker
+            self.SetAcceleratorTable(self.shortcuts)
+
+        else:
+            self.instr.SetLabel("Bad key combination.")
+
+    # endregion
+
+    # region Show / Hide Graphics
+
+    # region Keyboard Key
 
     def show_kbd_key(self, char=""):
         """
@@ -220,8 +372,13 @@ class CGUI(wx.Frame):
 
     def hide_kbd_key(self):
         """ Hides the keyboard key. """
+
         self.bkk_ctrl.make_hidden()
         self.instr.SetLabel("")
+
+    # endregion
+
+    # region Controller Key
 
     def show_crl_key(self, char=""):
         """
@@ -244,12 +401,16 @@ class CGUI(wx.Frame):
         self.bcb_ctrl.make_hidden()
         self.instr.SetLabel("")
 
+    # endregion
+
+    # region Tick
+
     def show_tick(self):
         """
         Shows an animated check mark and displays a message saying that the
         mapping has been successful.
-        :return:
         """
+
         # Set the label to say successful
         self.instr.SetLabel(self.SUC_MAP)
 
@@ -263,14 +424,70 @@ class CGUI(wx.Frame):
         self.gif.SetInactiveBitmap(inactive)
         # Play the animation
         self.gif.Play()
-        # After two seconds stop it (so it never repeats)
-        threading.Timer(2, self.gif.Stop).start()
+        # After 1.1 seconds stop it (so it never repeats)
+        threading.Timer(1.1, self.gif.Stop).start()
 
     def hide_tick(self):
         """ Hides the check mark. """
-        self.gif.Destroy()
+        if self.gif is not None:
+            self.gif.Destroy()
 
-    #def select_device
+    # endregion
+
+    # endregion
+
+    # region Reset GUI
+
+    def reset_asking(self):
+        """
+        Resets the GUI to either be asking for a controller button press
+        or put up the Select Device button
+        """
+
+        self.hide_crl_key()  # Hide the controller key
+        self.hide_kbd_key()  # Hide the keyboard key
+        self.hide_tick()  # Hide the tick
+        self.waiting_for_crl_btn = False  # Don't be waiting for anything
+        self.waiting_for_kbd_key = False
+
+        # If a device has been selected
+        if self.device_selected:
+            self.select_dev_btn.Hide()  # Hide the Select Device button
+
+            # Be waiting for the controller button press
+            self.waiting_for_crl_btn = True  # Yes we want a controller button
+
+            # And show the controller key
+            self.show_crl_key()  # Make the controller button visible
+
+        # Else, ensure the Select Device button is visible
+        else:
+            self.select_dev_btn.Show()
+
+    # endregion
+
+    # region Callable from Controller
+
+    def crl_btn_pressed(self):
+        """ Called whenever the controller button has been pressed. """
+
+        # If we're waiting for a controller key press
+        if self.waiting_for_crl_btn:
+            self.show_crl_key("X")  # Show an X
+            self.show_kbd_key()  # Make the keyboard button visible
+            self.waiting_for_crl_btn = False
+            self.waiting_for_kbd_key = True
+            self.SetAcceleratorTable(wx.NullAcceleratorTable)
+            self.SetFocus()
+
+    def device_unplugged(self):
+        """ Resets the app to to have a device selected. """
+
+        self.device_selected = False  # Set that no device has been selected.
+        self.max_from_tray(None)  # And maximize from the tray
+
+    # endregion
+
 
 ex = wx.App(False, None, True, True)
 CGUI(None, title=CGUI.SYSTEM_NAME)
