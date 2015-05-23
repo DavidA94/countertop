@@ -9,6 +9,7 @@ from source.data_objects.cl import *
 class Controller(object):
     #
     def __init__(self):
+        self.LKP = None
         self.poll = False
         self.cl = ControllerLinks()
         self.device = None
@@ -32,9 +33,9 @@ class Controller(object):
             self.device.close()
 
     def hid_handler(self, data):
-        if self.
+        #if self.
         #print("Raw data: {0}".format(data))
-
+        pass
 
     #Save and load config TBA
     def save_config(self):
