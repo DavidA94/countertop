@@ -37,3 +37,6 @@ class Key(object):
         self.key = key
         self.is_pressed = is_pressed
         self.friendly_name = friendly
+
+    def state_change(self):
+        self.is_pressed = not self.is_pressed
