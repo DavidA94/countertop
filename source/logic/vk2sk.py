@@ -1,7 +1,10 @@
-class HasShift:
+class HasShift(object):
     def __init__(self, key1, key2):
         self.k1 = key1
         self.k2 = key2
+
+    def __str__(self):
+        return self.k1
 
 class Vk2Sk(object):
     alt = "%"
@@ -118,20 +121,32 @@ class Vk2Sk(object):
 
     @staticmethod
     def convert(key_code, alt=False, ctrl=False, shift=False):
-        ret = ""
-        if alt:
-            ret += Vk2Sk.alt
+        # The return value
+        ret = None
 
-        if ctrl:
-            ret += Vk2Sk.ctrl
-
-        if shift:
-            ret += Vk2Sk.shift
-
+        # As long as we got a valid key
         if key_code in Vk2Sk.codes:
-            ret += Vk2Sk.codes[key_code]
-        else:
-            return "Bad value: " + hex(key_code)
+            # Get the key
+            code = Vk2Sk.codes[key_code]
+
+            # If only shift was pressed
+            if shift and not ctrl and not alt:
+                # And the type of code is a HasShift object
+                if type(code) is HasShift:
+                    # Return just the shifted key
+                    return code.k2
+
+            ret = str(Vk2Sk.codes[key_code])
+
+            if shift:
+                ret = Vk2Sk.shift + ret
+
+            if ctrl:
+                ret = Vk2Sk.ctrl + ret
+
+            if alt:
+                ret = Vk2Sk.alt + ret
+
         return ret
 
 

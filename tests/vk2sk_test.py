@@ -108,7 +108,7 @@ class TestLinksObject(TestCase):
         self.assertEqual(Vk2Sk.convert(0x00, True), None)
 
     def test_shift_secondary_no_others(self):
-        self.assertEqual(Vk2Sk.convert(0x60, shift=True), "!")
+        self.assertEqual(Vk2Sk.convert(0x31, shift=True), "!")
 
     def test_shift_alt_secondary(self):
-        self.assertEqual(Vk2Sk.convert(0x60, False, True, True), "^+1")
+        self.assertEqual(Vk2Sk.convert(0x30, False, True, True), "^+0")

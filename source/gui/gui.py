@@ -101,8 +101,6 @@ class CGUI(wx.Frame):
         # Show the UI
         self.Show()
 
-        self.SetFocus()
-
     # endregion
 
     # region GUI Initialization
@@ -318,7 +316,7 @@ class CGUI(wx.Frame):
             self.has_said_at_tray = True
 
         # Tell the controller it's minimized
-        # TODO Call method
+        self.controller.poll = True
 
     def max_from_tray(self, e):
         """
@@ -336,24 +334,19 @@ class CGUI(wx.Frame):
         self.tray.RemoveIcon()  # Remove the tray icon
 
         # Tell the controller it's maximized
-        # TODO Call method
+        self.controller.poll = False
 
     def key_up(self, e):
-        #if self.waiting_for_kbd_key:
-        #    self.controller.map_keys(e.)
+        if self.waiting_for_kbd_key:
+            val = Vk2Sk.convert(e.GetRawKeyCode(), e.AltDown(), e.CmdDown(),
+                                e.ShiftDown())
 
-        print hex(e.GetRawKeyCode())
-        return
+            if val is not None:
+                self.controller.make_link(val)
 
-        val = Vk2Sk.convert(e.GetRawKeyCode(), e.AltDown(), e.CmdDown(),
-                            e.ShiftDown())
-
-        if val is not None:
-            # TODO call_linker
-            self.SetAcceleratorTable(self.shortcuts)
-
-        else:
-            self.instr.SetLabel("Bad key combination.")
+                self.SetAcceleratorTable(self.shortcuts)
+            else:
+                self.instr.SetLabel("Bad key combination.")
 
     # endregion
 
