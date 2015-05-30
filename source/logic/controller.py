@@ -4,6 +4,7 @@ from time import sleep
 from msvcrt import kbhit
 import pywinusb.hid as hid
 import SendKeys
+import thread
 import threading
 import time
 from source.data_objects.cl import *
@@ -25,10 +26,9 @@ class Controller(object):
         self.BPF = button_pressed_func
 
         #launch thread to generate keys
-        self.StopThread = threading.Event()
-        self.GenerateThread = threading.Thread(target=self.generate_key_events)
-        #self.GenerateThread.start()
-
+        self.GenerateThread = threading.Thread(target=self.generate_key_events,name="Bob")
+        self.GenerateThread.start()
+        self.StopThread = threading.Event();
 
     #Get the list and return it so a device can be selected
     def get_devices(self):
@@ -79,7 +79,7 @@ class Controller(object):
             return current
 
     def make_link(self,key):
-        self.cl.add_link(self.data_to_make_link,Key(key))
+        self.cl.add_link(tuple(self.data_to_make_link), Key(key))
 
     def get_btn_press(self):
         self.wait_for_button = True
