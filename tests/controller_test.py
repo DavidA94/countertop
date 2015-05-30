@@ -10,21 +10,21 @@ class Data:
         self.__dict__.update(kwargs)
 
 class ControllerTest(TestCase):
-    def __init__(self, *args, **kwargs):
-        self.cont = Controller(None)
-        self.data = [1, 128, 127, 127, 128, 72, 0, 0]
-
     def setUp(self):
-        self.c = Controller(None)
+        self.c = Controller(Data)
+        self.data = (1, 128, 127, 127, 128, 72, 0, 0)
 
     def tearDown(self):
         self.c.StopThread.set()
 
     def test_get_devices(self):
-        temp1 = hid.find_all_hid_devices
+        temp = hid.find_all_hid_devices
 
         hid.find_all_hid_devices = mock.Mock(return_value=[Data(product_name="ABC")])
         self.assertEqual(self.c.get_devices(), ("ABC",))
+
+        hid.find_all_hid_devices = temp
+
 
     #Test whether or not a button can be pressed and a keyevent raised
     def test_press_button(self):
@@ -53,7 +53,7 @@ class ControllerTest(TestCase):
         self.c.data_to_make_link = self.data
         self.c.make_link('a')
         self.assertIn(self.data,self.c.cl.links.keys())
-        self.assertEqual(self.c.cl.links[self.data].key,'12313')
+        self.assertEqual(self.c.cl.links[self.data].key,'a')
 
 
     def test_save_config(self):
