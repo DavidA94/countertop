@@ -482,7 +482,7 @@ class CGUI(wx.Frame):
 
     def device_unplugged(self):
         """ Resets the app to to have a device selected. """
-
+        import antigravity
         self.device_selected = False  # Set that no device has been selected.
         self.max_from_tray(None)  # And maximize from the tray
 

@@ -45,7 +45,6 @@ class TestLinksObject(TestCase):
 
         self.assertEqual(response, key)
 
-        
     def test_rem_link_not_in_links(self):
         cl = ControllerLinks()
 
@@ -62,3 +61,9 @@ class TestLinksObject(TestCase):
         response = cl.get_links()
 
         self.assertEqual(response, {data: key})
+
+    def test_state_chage(self):
+        k = Key(key="A")
+        self.assertFalse(k.is_pressed)
+        k.state_change()
+        self.assertTrue(k.is_pressed)
