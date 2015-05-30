@@ -42,6 +42,7 @@ class ControllerTest(TestCase):
         self.assertIn(self.data,self.c.cl.links.keys())
         self.assertEqual(self.c.cl.links[self.data].key,'b')
 
+
     def test_save_config(self):
         pass
 
