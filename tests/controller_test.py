@@ -26,6 +26,28 @@ class ControllerTest(TestCase):
         hid.find_all_hid_devices = temp
 
 
+    def test_set_device_fail(self):
+        self.assertFalse(self.c.set_device("A"))
+
+    def test_set_device_fail_open(self):
+        self.c.devices = [hid.core.HidDevice(None), hid.core.HidDevice(None)]
+
+        with self.assertRaises(hid.core.HIDError) as e:
+            self.c.set_device(1)
+
+        self.assertEqual(e.exception.message, "Failure to get HID pre parsed data")
+
+    def test_set_device_pass(self):
+        dev0 = hid.core.HidDevice(None)
+        dev1 = hid.core.HidDevice(None)
+        self.c.devices = [dev0, dev1]
+        dev1.open = mock.Mock()
+
+        self.c.set_device(1)
+
+        self.assertEqual(self.c.device, dev1)
+
+
     #Test whether or not a button can be pressed and a keyevent raised
     def test_press_button(self):
         pass

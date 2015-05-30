@@ -41,14 +41,14 @@ class Controller(object):
     #event to be called whena device is chosen to be the usb device
     def set_device(self,device_id = None):
         if not isinstance(device_id,int):
-            return
+            return False
         self.device = self.devices[device_id]
         try:
             self.device.open()
             self.device.set_raw_data_handler(self.hid_handler)
 
         except hid.core.HIDError():
-            self.device.close()
+            pass
 
     # method called by
     def hid_handler(self, data):
