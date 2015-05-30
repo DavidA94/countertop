@@ -80,7 +80,7 @@ class Controller(object):
             return current
 
     def make_link(self,key):
-        self.cl.add_link(self.data_to_make_link,Key(key))
+        self.cl.add_link(tuple(self.data_to_make_link),Key(key))
 
     def get_btn_press(self):
         self.wait_for_button = True

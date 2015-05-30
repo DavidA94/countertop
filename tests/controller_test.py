@@ -9,13 +9,12 @@ class Data:
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
 
+def Useless():
+    pass
 class ControllerTest(TestCase):
-    def __init__(self, *args, **kwargs):
-        self.cont = Controller(None)
-        self.data = [1, 128, 127, 127, 128, 72, 0, 0]
-
     def setUp(self):
-        self.c = Controller(None)
+        self.c = Controller(Useless)
+        self.data = [1, 128, 127, 127, 128, 72, 0, 0]
 
     def tearDown(self):
         self.c.StopThread.set()
@@ -53,7 +52,7 @@ class ControllerTest(TestCase):
         self.c.data_to_make_link = self.data
         self.c.make_link('a')
         self.assertIn(self.data,self.c.cl.links.keys())
-        self.assertEqual(self.c.cl.links[self.data].key,'12313')
+        self.assertEqual(self.c.cl.links[self.data].key,'a')
 
 
     def test_save_config(self):
@@ -66,7 +65,7 @@ class ControllerTest(TestCase):
         pass
 
     def test_get_delta(self):
-        pass
+        data
 
     def test_get_bnt_press(self):
         pass
