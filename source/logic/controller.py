@@ -28,7 +28,7 @@ class Controller(object):
         #launch thread to generate keys
         self.StopThread = threading.Event()
         self.GenerateThread = threading.Thread(target=self.generate_key_events)
-        self.GenerateThread.start()
+        #self.GenerateThread.start()
 
 
     #Get the list and return it so a device can be selected

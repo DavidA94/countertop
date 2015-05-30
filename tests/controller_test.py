@@ -53,7 +53,7 @@ class ControllerTest(TestCase):
         self.c.data_to_make_link = self.data
         self.c.make_link('a')
         self.assertIn(self.data,self.c.cl.links.keys())
-        self.assertEqual(self.c.cl.links[self.data].key,'b')
+        self.assertEqual(self.c.cl.links[self.data].key,'12313')
 
 
     def test_save_config(self):
