@@ -76,7 +76,7 @@ class Controller(object):
                         ret.append(abs(dif))
             return tuple(ret)
         else:# something was None, so we will just return current
-            return current
+            return tuple(current)
 
     def make_link(self,key):
         self.cl.add_link(tuple(self.data_to_make_link),Key(key))
@@ -95,11 +95,4 @@ class Controller(object):
                 time.sleep(.1)#maybe change this?
             else:
                 time.sleep(2)
-
-    #Save and load config TBA
-    def save_config(self):
-        pass
-
-    def load_config(self):
-        pass
 
