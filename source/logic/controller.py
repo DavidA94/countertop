@@ -86,7 +86,7 @@ class Controller(object):
         self.data_to_make_link = None
 
     def generate_key_events(self):
-        while not self.StopThread.is_set():
+        while not self.StopThread.isSet():
             if self.poll:
                 #iterate the list and generate any keys that are down
                 for zelda in self.cl.links.values():
