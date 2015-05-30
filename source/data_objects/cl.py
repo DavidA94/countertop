@@ -33,7 +33,7 @@ class ControllerLinks(object):
 Holds information about a key, and it's pressed status
 """
 class Key(object):
-    def __init__(self, key, is_pressed = False, friendly=None):
+    def __init__(self, key, is_pressed=False, friendly=None):
         self.key = key
         self.is_pressed = is_pressed
         self.friendly_name = friendly
