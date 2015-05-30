@@ -5,7 +5,7 @@ from source.logic.controller import Controller
 
 class ControllerTest(TestCase):
     def setUp(self):
-        self.cont =
+        pass
 
     def tearDown(self):
         pass
