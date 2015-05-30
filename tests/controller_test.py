@@ -16,14 +16,18 @@ class ControllerTest(TestCase):
         self.c = Controller(Useless)
         self.data = [1, 128, 127, 127, 128, 72, 0, 0]
 
+
     def tearDown(self):
         self.c.StopThread.set()
 
     def test_get_devices(self):
-        temp1 = hid.find_all_hid_devices
+        temp = hid.find_all_hid_devices
 
         hid.find_all_hid_devices = mock.Mock(return_value=[Data(product_name="ABC")])
         self.assertEqual(self.c.get_devices(), ("ABC",))
+
+        hid.find_all_hid_devices = temp
+
 
     #Test whether or not a button can be pressed and a keyevent raised
     def test_press_button(self):

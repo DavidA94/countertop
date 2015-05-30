@@ -4,7 +4,6 @@ from time import sleep
 from msvcrt import kbhit
 import pywinusb.hid as hid
 import SendKeys
-import thread
 import threading
 import time
 from source.data_objects.cl import *
