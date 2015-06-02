@@ -92,7 +92,7 @@ class Controller(object):
                 for zelda in self.cl.links.values():
                     if zelda.is_pressed:
                         SendKeys.SendKeys(zelda.key)
-                time.sleep(.01)#maybe change this?
+                time.sleep(.1)#maybe change this?
             else:
                 time.sleep(2)
 
