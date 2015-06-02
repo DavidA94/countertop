@@ -1,5 +1,2 @@
 pywinusb
 nose2
-matplotlib
-SendKeys
-nose2-cov==1.0a4

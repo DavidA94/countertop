@@ -65,6 +65,7 @@ class CGUI(wx.Frame):
         self.heading = None  # Initialized in init_gui
         self.select_dev_btn = None  # Initialized in init_gui
         self.gif = None  # Used to show that a mapping has been successful
+        self.key_capture = None  # Used to capture key strokes
 
         # endregion
 
@@ -169,6 +170,9 @@ class CGUI(wx.Frame):
         wx.StaticLine(self, id=2, pos=(40, 40),
                       size=(self.GetVirtualSizeTuple()[0] - 80, 1))
 
+        # Hidden text box for getting key strokes
+        self.key_capture = wx.TextCtrl(parent=self, pos=(0,-000))
+
         # endregion
 
         # region Dynamic GUI Objects
@@ -215,10 +219,9 @@ class CGUI(wx.Frame):
 
         # Close / Minimize Events (They just make it minimize to the tray)
         self.Bind(wx.EVT_CLOSE, self.min_to_tray)
-        # self.Bind(wx.EVT_ICONIZE, self.min_to_tray)
 
         # Capture keystrokes
-        self.Bind(wx.EVT_KEY_UP, self.key_up)
+        self.key_capture.Bind(wx.EVT_KEY_UP, self.key_up)
 
         # Bind an event to the Select Device button shown at startup
         self.Bind(wx.EVT_BUTTON, self.on_select, self.select_dev_btn)
@@ -286,6 +289,8 @@ class CGUI(wx.Frame):
         self.tray.Destroy()
         # Destroy ourself
         self.Destroy()
+        self.controller.StopThread.set()
+        exit()
 
     def min_to_tray(self, e):
         """
@@ -343,8 +348,8 @@ class CGUI(wx.Frame):
 
             if val is not None:
                 self.controller.make_link(val)
-
                 self.SetAcceleratorTable(self.shortcuts)
+                self.show_kbd_key(val)
             else:
                 self.instr.SetLabel("Bad key combination.")
 
@@ -366,6 +371,10 @@ class CGUI(wx.Frame):
         if char == "":
             # Then set the instruction label to be the waiting message.
             self.instr.SetLabel(self.KBD_WAIT)
+
+        else:
+            self.show_tick()
+            threading.Timer(2, self.reset_asking).start()
 
         # Make the key visible
         self.bkk_ctrl.make_visible(char)
@@ -429,8 +438,12 @@ class CGUI(wx.Frame):
 
     def hide_tick(self):
         """ Hides the check mark. """
-        if self.gif is not None:
-            self.gif.Destroy()
+        try:
+            if self.gif is not None:
+                self.gif.Hide()
+                self.gif.Destroy()
+        except wx.PyDeadObjectError:
+            pass
 
     # endregion
 
@@ -456,6 +469,7 @@ class CGUI(wx.Frame):
 
             # Be waiting for the controller button press
             self.waiting_for_crl_btn = True  # Yes we want a controller button
+            self.controller.get_btn_press()
 
             # And show the controller key
             self.show_crl_key()  # Make the controller button visible
@@ -478,7 +492,7 @@ class CGUI(wx.Frame):
             self.waiting_for_crl_btn = False
             self.waiting_for_kbd_key = True
             self.SetAcceleratorTable(wx.NullAcceleratorTable)
-            self.SetFocus()
+            self.key_capture.SetFocus()
 
     def device_unplugged(self):
         """ Resets the app to to have a device selected. """

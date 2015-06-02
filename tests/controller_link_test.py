@@ -62,7 +62,7 @@ class TestLinksObject(TestCase):
 
         self.assertEqual(response, {data: key})
 
-    def test_state_chage(self):
+    def test_state_change(self):
         k = Key(key="A")
         self.assertFalse(k.is_pressed)
         k.state_change()
