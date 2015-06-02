@@ -79,11 +79,7 @@ class Controller(object):
             return tuple(current)
 
     def make_link(self,key):
-<<<<<<< HEAD
-        self.cl.add_link(tuple(self.data_to_make_link),Key(key))
-=======
         self.cl.add_link(tuple(self.data_to_make_link), Key(key))
->>>>>>> 199990bb4179c61993512196f702ca9de83fc95d
 
     def get_btn_press(self):
         self.wait_for_button = True
