@@ -30,7 +30,7 @@ class Controller(object):
 
         #launch thread to generate keys
         self.GenerateThread = threading.Thread(target=self.generate_key_events,name="Bob")
-        self.StopThread = threading.Event();
+        self.StopThread = threading.Event()
         self.GenerateThread.start()
 
     #Get the list and return it so a device can be selected
@@ -61,13 +61,14 @@ class Controller(object):
             self.data_to_make_link = data
             self.BPF()
         elif self.poll:
-            button = self.get_delta(data,self.last_USB)
+            result = self.get_delta(data,self.last_USB)
+            button = result[0]
             if button in self.cl.links.keys():
-                self.cl.links[button].state_change()#change the state of the button
-
+                self.cl.links[button].is_pressed = result[1]#This is the state of the button
         self.last_USB = data
 
     def get_delta(self,current,last):
+        pressed = False
         ret = []
         if current is not None and last is not None:
             if(len(current) == len(last)):
@@ -76,10 +77,11 @@ class Controller(object):
                     if dif == 0:
                         ret.append(current[ndx])
                     else:
+                        pressed = True if dif < 0 else False
                         ret.append(abs(dif))
-            return tuple(ret)
+            return tuple(ret), pressed
         else:# something was None, so we will just return current
-            return tuple(current)
+            return tuple(current), pressed
 
     def make_link(self,key):
         self.cl.add_link(tuple(self.data_to_make_link), Key(key))

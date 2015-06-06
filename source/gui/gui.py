@@ -346,7 +346,6 @@ class CGUI(wx.Frame):
         if self.waiting_for_kbd_key:
             val = Vk2Sk.convert(e.GetRawKeyCode(), e.AltDown(), e.CmdDown(),
                                 e.ShiftDown())
-
             if val is not None:
                 self.controller.make_link(val)
                 # self.SetAcceleratorTable(self.shortcuts)

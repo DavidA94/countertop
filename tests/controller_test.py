@@ -132,11 +132,18 @@ class ControllerTest(TestCase):
         data1 = [1, 128, 127, 127, 128, 72, 0, 0]
         data2 = [1, 128, 127, 127, 128, 8, 0, 0]
 
+        #test default
         delta = self.c.get_delta(data1,data2)
-        self.assertEqual(delta,tuple([1, 128, 127, 127, 128, 64, 0, 0]))
+        self.assertEqual(delta[0],tuple([1, 128, 127, 127, 128, 64, 0, 0]))
+        self.assertFalse(delta[1])
 
+        #test that state changes to pressed if delta is positive
+        delta = self.c.get_delta(data2,data1)
+        self.assertTrue(delta[1])
+
+        #test start case where no other data point is available
         delta = self.c.get_delta(data1,None)
-        self.assertEqual(delta,tuple(data1))
+        self.assertEqual(delta[0],tuple(data1))
 
 
     def test_get_bnt_press(self):
