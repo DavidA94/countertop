@@ -65,7 +65,7 @@ class CGUI(wx.Frame):
         self.heading = None  # Initialized in init_gui
         self.select_dev_btn = None  # Initialized in init_gui
         self.gif = None  # Used to show that a mapping has been successful
-        self.key_capture = None  # Used to capture key strokes
+        # self.key_capture = None  # Used to capture key strokes
 
         # endregion
 
@@ -92,7 +92,7 @@ class CGUI(wx.Frame):
 
         # region Keyboard Shortcuts
 
-        self.shortcuts = None
+        # self.shortcuts = None
 
         # endregion
 
@@ -110,50 +110,51 @@ class CGUI(wx.Frame):
         """ Initializes a CGUI with the proper elements """
 
         # region Menu Setup
-
-        # Create the menu
-        menu_bar = wx.MenuBar()  # The menu bar
-        file_menu = wx.Menu()  # The file menu in the menu bar
-
-        # The file menu has Load, Select, and Exit
-        load_item = file_menu.Append(wx.ID_OPEN, "&Load Config...\tCtrl + L",
-                                     "Load Configuration")
-        select_item = file_menu.Append(wx.ID_SETUP,
-                                       "&Select Device...\tCtrl + D",
-                                       "Select Device")
-        exit_item = file_menu.Append(wx.ID_EXIT, "E&xit\tAlt + F4",
-                                     "Exit Application")
-
-        # Add the file menu to the menu bar
-        menu_bar.Append(file_menu, "&File")
-
-        # Set the menu bar for the window
-        self.SetMenuBar(menu_bar)
-
+        #
+        # # Create the menu
+        #
+        # menu_bar = wx.MenuBar()  # The menu bar
+        # file_menu = wx.Menu()  # The file menu in the menu bar
+        #
+        # # The file menu has Load, Select, and Exit
+        # load_item = file_menu.Append(wx.ID_OPEN, "&Load Config...\tCtrl + L",
+        #                              "Load Configuration")
+        # select_item = file_menu.Append(wx.ID_SETUP,
+        #                                "&Select Device...\tCtrl + D",
+        #                                "Select Device")
+        # exit_item = file_menu.Append(wx.ID_EXIT, "E&xit\tAlt + F4",
+        #                              "Exit Application")
+        #
+        # # Add the file menu to the menu bar
+        # menu_bar.Append(file_menu, "&File")
+        #
+        # # Set the menu bar for the window
+        # self.SetMenuBar(menu_bar)
+        #
         # region Menu Bindings
-
-        # Bind events for when the menu options are clicked.
-        self.Bind(wx.EVT_MENU, self.on_load, load_item)
-        self.Bind(wx.EVT_MENU, self.on_select, select_item)
-        self.Bind(wx.EVT_MENU, self.on_exit, exit_item)
-
-        # endregion
-
-        # endregion
+        #
+        # # Bind events for when the menu options are clicked.
+        # self.Bind(wx.EVT_MENU, self.on_load, load_item)
+        # self.Bind(wx.EVT_MENU, self.on_select, select_item)
+        # self.Bind(wx.EVT_MENU, self.on_exit, exit_item)
+        #
+        # # endregion
+        #
+        # # endregion
 
         # region Keyboard Shortcuts / AcceleratorTable
-
-        self.shortcuts = wx.AcceleratorTable([(wx.ACCEL_CTRL, ord('L'),
-                                               load_item.GetId()),  # Ctrl + L
-                                              (wx.ACCEL_CTRL, ord('D'),
-                                               select_item.GetId()),  # Ctrl+D
-                                              (wx.ACCEL_ALT, wx.WXK_F4,
-                                               exit_item.GetId())])  # Alt + F4
-
-        # Add keyboard shortcuts
-        self.SetAcceleratorTable(self.shortcuts)
-
-        # endregion
+        #
+        # self.shortcuts = wx.AcceleratorTable([(wx.ACCEL_CTRL, ord('L'),
+        #                                        load_item.GetId()),  # Ctrl + L
+        #                                       (wx.ACCEL_CTRL, ord('D'),
+        #                                        select_item.GetId()),  # Ctrl+D
+        #                                       (wx.ACCEL_ALT, wx.WXK_F4,
+        #                                        exit_item.GetId())])  # Alt + F4
+        #
+        # # Add keyboard shortcuts
+        # self.SetAcceleratorTable(self.shortcuts)
+        #
+        # # endregion
 
         # region Always Present GUI Objects
 
@@ -171,7 +172,7 @@ class CGUI(wx.Frame):
                       size=(self.GetVirtualSizeTuple()[0] - 80, 1))
 
         # Hidden text box for getting key strokes
-        self.key_capture = wx.TextCtrl(parent=self, pos=(0,-000))
+        # self.key_capture = wx.TextCtrl(parent=self, pos=(0,-000))
 
         # endregion
 
@@ -221,7 +222,7 @@ class CGUI(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.min_to_tray)
 
         # Capture keystrokes
-        self.key_capture.Bind(wx.EVT_KEY_UP, self.key_up)
+        self.Bind(wx.EVT_KEY_UP, self.key_up)
 
         # Bind an event to the Select Device button shown at startup
         self.Bind(wx.EVT_BUTTON, self.on_select, self.select_dev_btn)
@@ -348,7 +349,7 @@ class CGUI(wx.Frame):
 
             if val is not None:
                 self.controller.make_link(val)
-                self.SetAcceleratorTable(self.shortcuts)
+                # self.SetAcceleratorTable(self.shortcuts)
                 self.show_kbd_key(val)
             else:
                 self.instr.SetLabel("Bad key combination.")
@@ -491,8 +492,8 @@ class CGUI(wx.Frame):
             self.show_kbd_key()  # Make the keyboard button visible
             self.waiting_for_crl_btn = False
             self.waiting_for_kbd_key = True
-            self.SetAcceleratorTable(wx.NullAcceleratorTable)
-            self.key_capture.SetFocus()
+            # self.SetAcceleratorTable(wx.NullAcceleratorTable)
+            self.SetFocus()
 
     def device_unplugged(self):
         """ Resets the app to to have a device selected. """
