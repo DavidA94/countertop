@@ -1,12 +1,25 @@
 class HasShift(object):
+    """
+    Class for holding two keys, shift + anuthah
+    """
     def __init__(self, key1, key2):
+        """
+        Init function
+        """
         self.k1 = key1
         self.k2 = key2
 
     def __str__(self):
+        '''
+        Returns the key (Non shifted)
+        :return: the key
+        '''
         return self.k1
 
 class Vk2Sk(object):
+    """
+    Class that converts virtual to send key
+    """
     alt = "%"
     ctrl = "^"
     shift = "+"
@@ -121,6 +134,14 @@ class Vk2Sk(object):
 
     @staticmethod
     def convert(key_code, alt=False, ctrl=False, shift=False):
+        """
+        Converts the virtual key to send Key
+        :param key_code: the virtual key code
+        :param alt: state of alt
+        :param ctrl: state of ctrl
+        :param shift: state of shift
+        :return: The Send Key
+        """
         # The return value
         ret = None
 
