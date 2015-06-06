@@ -14,7 +14,8 @@ from source.data_objects.cl import *
 
 
 class Controller(object):
-    def __init__(self, button_pressed_func):
+
+    def __init__(self, button_pressed_func, device_unplugged):
         """
         Init Function
         :param button_pressed_func: function that will be called after get_btn_press is called
@@ -32,6 +33,9 @@ class Controller(object):
 
         #return func to notify UI that a key has been captured
         self.BPF = button_pressed_func
+
+        # Called if the device is unplugged
+        self.device_unplugged = device_unplugged
 
         #launch thread to generate keys
         self.GenerateThread = threading.Thread(target=self.generate_key_events,name="Bob")
@@ -130,6 +134,9 @@ class Controller(object):
         :return: N/A
         """
         while not self.StopThread.isSet():
+            if self.device is not None and not self.device.is_plugged():
+                self.device_unplugged()
+                break
             if self.poll:
                 #iterate the list and generate any keys that are down
                 for zelda in self.cl.links.values():

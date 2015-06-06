@@ -20,11 +20,31 @@ class Data:
 
 class ControllerTest(TestCase):
     def setUp(self):
-        self.c = Controller(Data)
+        self.c = Controller(Data, useless)
         self.data = [1, 128, 127, 127, 128, 72, 0, 0]
 
     def tearDown(self):
         self.c.StopThread.set()
+
+    def test_device_plugged_unplugged(self):
+        dev0 = hid.core.HidDevice(None)
+        dev0.open = mock.Mock()
+        dev0.is_plugged = mock.Mock(return_value=False)
+        self.c.devices = [dev0, ]
+        self.c.device_unplugged = mock.Mock()
+
+        self.c.set_device(0)
+        self.c.generate_key_events()
+
+        self.assertTrue(self.c.device_unplugged.called)
+
+        dev0.is_opened = mock.Mock(return_value=True)
+        self.c.device_unplugged = mock.Mock()
+
+        threading.Timer(2, self.c.StopThread.set())
+
+        self.c.generate_key_events()
+        self.assertFalse(self.c.device_unplugged.called)
 
 
     def test_get_devices(self):
