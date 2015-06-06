@@ -4,6 +4,10 @@ import wx
 class TrayIcon(wx.TaskBarIcon):
 
     def __init__(self, frame):
+        """
+        Creates a new tray "window"
+        :param frame: wxPyton use.
+        """
 
         # Not sure why this is needed, but it is.
         self.locale = wx.Locale(wx.LANGUAGE_ENGLISH)
@@ -22,9 +26,16 @@ class TrayIcon(wx.TaskBarIcon):
         self.Bind(wx.EVT_TASKBAR_LEFT_DCLICK, self.restore_main_window)
 
     def show_right_click_menu(self, e):
+        """
+        Shows the right click menu
+        """
         self.PopupMenu(self.make_menu())
 
     def make_menu(self):
+        """
+        Makes the right click menu.
+        """
+
         # Create a menu
         menu = wx.Menu()
 
@@ -46,4 +57,7 @@ class TrayIcon(wx.TaskBarIcon):
         return menu
 
     def restore_main_window(self, e):
+        """
+        Restores the main window
+        """
         self.frame.max_from_tray(e)

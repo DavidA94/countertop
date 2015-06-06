@@ -49,7 +49,7 @@ class CGUI(wx.Frame):
 
         # Data Setup
         self.controller = Controller(self.crl_btn_pressed, self.device_unplugged)  # The controller
-        self.device_selected = False
+        self.device_selected = False  # Holds if a device has been selected.
         self.has_said_at_tray = False  # Only show the "still open" msg once
         self.waiting_for_crl_btn = True  # Waiting for a controller button?
         self.waiting_for_kbd_key = False  # Waiting for a keyboard key?
@@ -343,6 +343,11 @@ class CGUI(wx.Frame):
         self.controller.poll = False
 
     def key_up(self, e):
+        """
+        Called when a key is released.
+
+        :param e: The event (not used)
+        """
         if self.waiting_for_kbd_key:
             val = Vk2Sk.convert(e.GetRawKeyCode(), e.AltDown(), e.CmdDown(),
                                 e.ShiftDown())
