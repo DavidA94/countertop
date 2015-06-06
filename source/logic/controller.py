@@ -141,7 +141,7 @@ class Controller(object):
                 #iterate the list and generate any keys that are down
                 for zelda in self.cl.links.values():
                     if zelda.is_pressed:
-                        SendKeys.SendKeys(zelda.key)
+                        SendKeys.SendKeys(zelda.key, with_spaces=True)
                 time.sleep(.1)#maybe change this?
             else:
                 time.sleep(2)
