@@ -108,9 +108,9 @@ class Controller(object):
                     else:
                         pressed = True if dif < 0 else False
                         ret.append(abs(dif))
-            return tuple(ret), pressed
+            return tuple(ret), not pressed
         else:# something was None, so we will just return current
-            return tuple(current), pressed
+            return tuple(current), not pressed
 
     def make_link(self,key):
         """

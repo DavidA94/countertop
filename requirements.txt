@@ -1,2 +1,3 @@
 pywinusb
 nose2
+sphinx
