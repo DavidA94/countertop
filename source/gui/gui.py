@@ -48,7 +48,7 @@ class CGUI(wx.Frame):
         # region Data member variables
 
         # Data Setup
-        self.controller = Controller(self.crl_btn_pressed)  # The controller
+        self.controller = Controller(self.crl_btn_pressed, self.device_unplugged)  # The controller
         self.device_selected = False
         self.has_said_at_tray = False  # Only show the "still open" msg once
         self.waiting_for_crl_btn = True  # Waiting for a controller button?
@@ -499,6 +499,9 @@ class CGUI(wx.Frame):
         import antigravity
         self.device_selected = False  # Set that no device has been selected.
         self.max_from_tray(None)  # And maximize from the tray
+
+        # Recreate the controller, since the thread has been stopped now.
+        self.controller = Controller(self.crl_btn_pressed, self.device_unplugged)
 
     # endregion
 
