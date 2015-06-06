@@ -27,8 +27,8 @@ class Controller(object):
 
         #launch thread to generate keys
         self.GenerateThread = threading.Thread(target=self.generate_key_events,name="Bob")
+        self.StopThread = threading.Event()
         self.GenerateThread.start()
-        self.StopThread = threading.Event();
 
     #Get the list and return it so a device can be selected
     def get_devices(self):
